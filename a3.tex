@@ -1,0 +1,76 @@
+\documentclass{article}
+\title{Algorithms Assignment 3}
+\author{Logan Day}
+\date{\today}
+\usepackage[shortlabels]{enumitem}
+
+\begin{document}
+\maketitle
+\section{}
+
+\begin{enumerate}[a.]
+
+    \item
+
+        The two algorithms will produce different results when the input array
+        is $[1, 2, 3]$. In the case of BUILD-MAX-HEAP', first 1 is inserted
+        as the root of the array, then 2 is inserted and swapped with one. at
+        this point the heap looks like $[2, 1]$. Finally, Three is inserted,
+        and swapped with two, resulting in the array $[3, 1, 2]$. In the case
+        of BUILD-MAX-HEAP, the operations are done directly on the array, instead
+        of adding values to a new array. First, Max heapify is called on the
+        root, as it is the first non leaf node. Because 3 is the larger of the
+        two child nodes, 1 is swapped with three, resulting in the array $[3,
+        2, 1]$. This counter example confirms that the two algorithms do not
+        produce the same result on all imputs. 
+
+    \item
+
+        BUILDMAXHEAP operates in $\Theta(nlg{n})$. Because the number of
+        calls to MAX-HEAP-INSERT is bounded by n, the overall runtime of the
+        algorithm is n x the cost MAX-HEAP-INSERT. The cost of each max heap insert
+        call is $\log{d}$, where d is the depth of each node being inserted, as
+        each call to MAX-HEAP-INSERT bubbles the inserted node up the tree until
+        it is smaller than it's parent node. In the worst case, each node will be
+        the new largest node in the tree, and there for will have to be bubbled
+        up all the way up the tree until it replaces the root. Each node is inserted
+        at a height of $\lg{n}$, where n is the index of the node, so the total
+        number of swaps can be calculated by $\sum_2^n{ \lfloor \lg{n} \rfloor }$. 
+        This is equivalent to  $\sum_1^n{ \lfloor \lg{n} \rfloor } -  \lfloor \lg{n} \rfloor 
+        = \theta(n\lg{n}) - \lfloor \lg{n} \rfloor = \theta(n\lg{n})$
+
+\end{enumerate}
+
+\section{}
+
+    General note for this one: each node has to bubble all the way down to the level
+    it started at. at least half the nodes are on the bottom level, so the runtime
+    of the algorithm is dominated by the bottom nodes.
+
+    Because the number of calls to max heapify is bounded by n, the overall
+    runtime of the algorithm is bounded by n x the cost of Max heapify. In
+    either of the cases, the max heap is created in O(n) time, and
+    sequentially, each the root of the heap and the last value of the heap are
+    swapped, and the last value is sifted down into a position that maintains
+    the heap property.
+
+\section{}
+    Note to self for tomorrow: the worst case for the top node is o(n), then 
+    o(n-1), o(n-2) etc. Find a sum to calculate this and youre good. Also mention 
+    the for loop in the beginning of the thing. 
+
+    My algorithm: For each node in the heap, recursively check that the value
+    of the node is greater than the value of each node in it's left subtree,
+    and less than the value of each node in it's right subtree. This is
+    implemented as return checkLeftSubtree(leftChild, rootValue) &&
+    checkRightSubtree(rightChild, rootValue). The implementation of the inner
+    functions follows. CheckLeftSubtree(node n, int rootValue): If the n is
+    null, return true. If n's value is greater than the root node value, return
+    false. If neither of these calls return true, return
+    (checkLeftSubtree(n.leftChild, rootValue) && checkLeftSubtree(n.rightChild,
+    rootValue). CheckRightSubtree is the same, but with the greater than replaced
+    by less than. In the best case, one of the checks fails in the first iteration,
+    and the runtime of the algorithm is $\theta$ of one in the result. In the worst
+    case, each node in the tree
+
+\end{document}
