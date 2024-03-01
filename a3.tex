@@ -26,18 +26,19 @@
 
     \item
 
-        BUILDMAXHEAP operates in $\Theta(nlg{n})$. Because the number of
-        calls to MAX-HEAP-INSERT is bounded by n, the overall runtime of the
-        algorithm is n x the cost MAX-HEAP-INSERT. The cost of each max heap insert
-        call is $\log{d}$, where d is the depth of each node being inserted, as
-        each call to MAX-HEAP-INSERT bubbles the inserted node up the tree until
-        it is smaller than it's parent node. In the worst case, each node will be
-        the new largest node in the tree, and there for will have to be bubbled
-        up all the way up the tree until it replaces the root. Each node is inserted
-        at a height of $\lg{n}$, where n is the index of the node, so the total
-        number of swaps can be calculated by $\sum_2^n{ \lfloor \lg{n} \rfloor }$. 
-        This is equivalent to  $\sum_1^n{ \lfloor \lg{n} \rfloor } -  \lfloor \lg{n} \rfloor 
-        = \theta(n\lg{n}) - \lfloor \lg{n} \rfloor = \theta(n\lg{n})$
+        BUILDMAXHEAP operates in $\Theta(nlg{n})$. Because the number of calls
+        to MAX-HEAP-INSERT is bounded by n, the overall runtime of the
+        algorithm is n x the cost of MAX-HEAP-INSERT. The cost of each max heap
+        insert call is $\log{d}$, where d is the depth of each node being
+        inserted, as each call to MAX-HEAP-INSERT bubbles the inserted node up
+        the tree until it is smaller than it's parent node. In the worst case,
+        each node will be the new largest node in the tree, and there for will
+        have to be bubbled up all the way up the tree until it replaces the
+        root. Each node is inserted at a height of $\lg{n}$, where n is the
+        index of the node, so the total number of swaps can be calculated by
+        $\sum_2^n{ \lfloor \lg{n} \rfloor }$. This is equivalent to  $\sum_1^n{
+            \lfloor \lg{n} \rfloor } -  \lfloor \lg{n} \rfloor =
+        \theta(n\lg{n}) - \lfloor \lg{n} \rfloor = \theta(n\lg{n})$
 
 \end{enumerate}
 
@@ -50,11 +51,14 @@
     Because the number of calls to max heapify is bounded by n, the overall
     runtime of the algorithm is bounded by n x the cost of Max heapify. In
     either of the cases, the max heap is created in O(n) time, and
-    sequentially, each the root of the heap and the last value of the heap are
+    sequentially, in every iteration the root of the heap and the last value of the heap are
     swapped, and the last value is sifted down into a position that maintains
-    the heap property.
+    the heap property. The maximum cost of a sift down operation is $\log{n}$,
+    so an upper bound on the runtime of the algorithm is $\theta(n\log{n})$,
+    as n calls are made to max heapify.
 
 \section{}
+
     Note to self for tomorrow: the worst case for the top node is o(n), then 
     o(n-1), o(n-2) etc. Find a sum to calculate this and youre good. Also mention 
     the for loop in the beginning of the thing. 
@@ -62,15 +66,19 @@
     My algorithm: For each node in the heap, recursively check that the value
     of the node is greater than the value of each node in it's left subtree,
     and less than the value of each node in it's right subtree. This is
-    implemented as return checkLeftSubtree(leftChild, rootValue) &&
+    implemented as return checkLeftSubtree(leftChild, rootValue) \&\&
     checkRightSubtree(rightChild, rootValue). The implementation of the inner
     functions follows. CheckLeftSubtree(node n, int rootValue): If the n is
     null, return true. If n's value is greater than the root node value, return
     false. If neither of these calls return true, return
-    (checkLeftSubtree(n.leftChild, rootValue) && checkLeftSubtree(n.rightChild,
+    (checkLeftSubtree(n.leftChild, rootValue) \&\& checkLeftSubtree(n.rightChild,
     rootValue). CheckRightSubtree is the same, but with the greater than replaced
     by less than. In the best case, one of the checks fails in the first iteration,
-    and the runtime of the algorithm is $\theta$ of one in the result. In the worst
-    case, each node in the tree
+    and the runtime of the algorithm is $\theta(1)$ in the result. In the worst
+    case, the binary tree is a bst, and the the checkLeftSubtree and checkRightSubtree 
+    functions have to be called on each node in the tree. The runtime of the first call
+    will be $\theta(n)$, and the runtime of the second call will be $\theta(n-1)$, and so
+    on, until the last call, which will be $\theta(1)$. The total runtime can then be
+    calculted by $\sum_1^n{ \theta(n) } = \theta(n^2)$.
 
 \end{document}
